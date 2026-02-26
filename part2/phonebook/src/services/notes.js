@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = 'http://localhost:3002/api/persons'
+// const baseUrl = 'http://localhost:3002/api/persons'  // Changing for relative path for online deployment
+const baseUrl = '/api/persons'
 
 const getAll = () => {
   return axios.get(baseUrl).then(response => response.data)
