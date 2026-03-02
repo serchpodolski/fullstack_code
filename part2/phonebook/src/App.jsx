@@ -66,7 +66,11 @@ const App = () => {
         setDraft({ name: '', number: '' })
       })
      .catch(error => {
-      console.error('Error adding person:', error)
+      console.error('Error adding person:', error.response.data.error)
+      setStatusMessage({message: error.response.data.error, type: 'error'})
+      setTimeout(() => {
+          setStatusMessage(null)
+        }, 5000)
      })
   }
     
