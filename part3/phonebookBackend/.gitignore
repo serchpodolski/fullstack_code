@@ -1,2 +1,4 @@
 node_modules/
 .env
+index_copy.js
+phoneMongo.js
