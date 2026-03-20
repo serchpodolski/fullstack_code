@@ -52,9 +52,12 @@ blogsRouter.put('/:id', userExtractor, async (request, response) => {
   if (!blog) {
     return response.status(404).json({ error: 'blog not found' })
   }
+  const isEditingContent = (author && author !== blog.author) ||
+                           (title && title !== blog.title) ||
+                           (url && url !== blog.url)
 
-  if (request.user.id.toString() !== blog.user.toString()) {
-    return response.status(403).json({ error: 'only the creator can update this blog' })
+  if (isEditingContent && request.user.id.toString() !== blog.user.toString()) {
+    return response.status(403).json({ error: 'only the creator can edit text fields' })
   }
 
   blog.author = author
@@ -62,8 +65,9 @@ blogsRouter.put('/:id', userExtractor, async (request, response) => {
   blog.url = url
   blog.likes = likes
 
-  await blog.save()
-  response.json(blog)
+  const savedBlog = await blog.save()
+  await savedBlog.populate('user', { name: 1 })
+  response.json(savedBlog)
 })
 
 blogsRouter.delete('/:id', userExtractor, async (request, response) => {
