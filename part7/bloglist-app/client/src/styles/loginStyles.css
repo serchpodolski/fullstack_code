@@ -1,0 +1,79 @@
+.login-form{
+    width: 50vw;
+    min-width: 500px;
+    margin: 5% auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.login-form h2{
+    font-family: "Germania One", system-ui;
+    font-size: 3.5rem;
+    text-shadow: 1px 1px 3px rgb(107, 220, 228),
+                -1px -1px 3px rgb(107, 220, 228);
+    letter-spacing: 2px;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+}
+.login-form p{
+    font-family: "Noto Sans HK", sans-serif;
+    font-size: 1.25rem;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 25px;
+}
+.login-fields-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+    padding: auto;
+}
+.login-field{
+    margin: 10px auto;
+    padding: 0;
+    width: 70%;
+}
+.login-field input{
+    font-family: "Noto Sans HK", sans-serif;
+    font-size: 1.5rem;
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid rgb(107, 220, 228);
+    outline: none;
+    margin:auto;
+    width: 100%;
+
+}
+.login-field label{
+    font-family: "Noto Sans HK", sans-serif;
+    font-size: 1.75rem;
+    color: rgb(107, 220, 228);
+    text-shadow: 2px 1px 2px #000000,
+                -2px -1px 10px #000000;
+    margin: 0;
+}
+.login-button button{
+    font-family: "Noto Sans HK", sans-serif;
+    font-size: 2rem;
+    padding: 5px 20px;
+    margin-top:20px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(45, 27, 116, 0.644);
+    color: rgb(107, 220, 228);
+    text-shadow: 1px 1px 3px #000000,
+                -1px -1px 3px #000000;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.login-button button:hover{
+    transform: scale(1.1) translateY(-5px);
+    color: rgba(45, 27, 116, 0.644);
+    background-color: rgb(107, 220, 228);
+    font-size: 1.75rem;
+}

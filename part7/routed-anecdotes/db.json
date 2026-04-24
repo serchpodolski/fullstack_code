@@ -1,0 +1,12 @@
+{
+  "anecdotes": [
+    {
+      "content": "new test",
+      "author": "me as well",
+      "info": "aswell.com",
+      "votes": 0,
+      "id": "rDb7kn6p4sI"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
