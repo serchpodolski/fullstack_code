@@ -1,8 +1,11 @@
+import BornForm from "./BornForm"
+
+
 const Authors = (props) => {
   if (!props.show) {
     return null
   }
-  const authors = []
+  const authors = props.authors
 
   return (
     <div>
@@ -23,6 +26,9 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
+      <div>
+        <BornForm />
+      </div>
     </div>
   )
 }
