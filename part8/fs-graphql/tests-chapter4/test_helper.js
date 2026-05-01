@@ -3,6 +3,7 @@ const {
 } = require('../library-backend/node_modules/@apollo/server')
 const { MongoMemoryServer } = require('mongodb-memory-server')
 const mongoose = require('../library-backend/node_modules/mongoose')
+require('node:dns/promises').setServers(['1.1.1.1', '8.8.8.8'])
 
 const typeDefs = require('../library-backend/schema')
 const resolvers = require('../library-backend/resolvers')
