@@ -111,7 +111,7 @@ const createBook = async (page, { title, author, published, genres }) => {
 
   await titleInput.fill(title)
   await authorInput.fill(author)
-  await publishedInput.fill(String(published))
+  await publishedInput.fill(published.toString())
 
   for (const genre of genres) {
     await genreInput.fill(genre)

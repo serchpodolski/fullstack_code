@@ -24,7 +24,7 @@ const resolvers = {
                 query.author = authorId
             }
             if (args.genre) {
-                query.genres = { $in: [args.genre] }
+                query.genres = { $regex: new RegExp(`^${args.genre}$`, 'i') }
             }
 
             return Book.find(query).populate('author')

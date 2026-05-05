@@ -10,9 +10,23 @@ export const ALL_AUTHORS = gql`
     }
   }
 `
+// export const ALL_BOOKS = gql`
+//   query {
+//     allBooks {
+//       title
+//       author {
+//         name
+//         id
+//       }
+//       published
+//       genres
+//     }
+//   }
+// `
+
 export const ALL_BOOKS = gql`
-  query {
-    allBooks {
+  query fetchBooks($author: String, $genre: String) {
+    allBooks(author: $author, genre: $genre) {
       title
       author {
         name
@@ -20,6 +34,7 @@ export const ALL_BOOKS = gql`
       }
       published
       genres
+      id
     }
   }
 `
@@ -56,6 +71,37 @@ export const EDIT_BORN = gql`
       born
       bookCount
       id
+    }
+  }
+`
+
+export const LOGIN = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      value
+    }
+  }
+`
+export const ME = gql`
+  query {
+    me {
+      username
+      favoriteGenre
+      id
+    }
+  }
+`
+
+export const FIND_BOOK = gql`
+  query findBook($title: String!) {
+    findBook(title: $title) {
+      title
+      author {
+        name
+        id
+      }
+      published
+      genres
     }
   }
 `

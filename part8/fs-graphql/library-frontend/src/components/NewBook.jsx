@@ -13,7 +13,8 @@ const NewBook = (props) => {
     {
       refetchQueries: [
         { query: ALL_AUTHORS },
-        { query: ALL_BOOKS }
+        { query: ALL_BOOKS },
+        { query: ALL_BOOKS, variables: { genre: null } }
       ]
     }
   )
@@ -34,7 +35,8 @@ const NewBook = (props) => {
         author,
         published: Number(published),
         genres
-      }
+      },
+      
     })
 
     setTitle('')

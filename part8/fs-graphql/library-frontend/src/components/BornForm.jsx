@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useMutation, useQuery } from "@apollo/client/react"
 import { EDIT_BORN, ALL_AUTHORS } from "../utilities/queries"
 
@@ -53,8 +53,9 @@ const BornForm = () => {
           </select>
         </div>
         <div>
-          born
+          <label htmlFor='born'>Born</label>
           <input
+            id='born'
             value={born}
             onChange={({ target }) => setBorn(target.value)}
           />
