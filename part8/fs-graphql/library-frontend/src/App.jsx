@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { useQuery, useApolloClient } from '@apollo/client/react'
+import { useQuery, useApolloClient, useSubscription } from '@apollo/client/react'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import Notification from './components/Notification'
-import { ALL_AUTHORS, ALL_BOOKS } from './utilities/queries'
+import { ALL_AUTHORS, ALL_BOOKS, BOOK_ADDED } from './utilities/queries'
 import LoginForm from './components/LoginForm'
 import Recommend from './components/Recommend'
-
+import { addBookToCache } from './utilities/apolloClient'
 
 
 const App = () => {
@@ -15,9 +15,17 @@ const App = () => {
   const [token, setToken] = useState(localStorage.getItem('library-user-token'))
   const [errorMessage, setErrorMessage] = useState(null)
   const client = useApolloClient()
+
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      const addedBook = data.data.bookAdded
+      notify(`${addedBook.title} added`)
+      addBookToCache(client.cache, addedBook)
+    }
+  })
   
   const authorsQuery = useQuery(ALL_AUTHORS)
-  const books = useQuery(ALL_BOOKS)
+  const books = useQuery(ALL_BOOKS, { variables: { genre: null } })
   if(authorsQuery.loading || books.loading) return <div>Loading...</div>
 
   const onLogout = () => {

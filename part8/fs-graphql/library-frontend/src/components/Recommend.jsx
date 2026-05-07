@@ -3,9 +3,7 @@ import { ME, ALL_BOOKS } from '../utilities/queries'
 import { useQuery } from '@apollo/client/react'
 
 const Recommend = (props) => {
-  const userMe = useQuery(ME, {
-    fetchPolicy: 'network-only'
-  })
+  const userMe = useQuery(ME)
 
   const favoriteGenre = userMe.data?.me?.favoriteGenre
   
@@ -13,8 +11,7 @@ const Recommend = (props) => {
     variables:{
       genre: favoriteGenre
     },
-    skip: !favoriteGenre,
-    fetchPolicy: 'network-only'
+    skip: !favoriteGenre
   })
 
   if(!props.show) return null

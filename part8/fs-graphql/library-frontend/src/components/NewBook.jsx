@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { CREATE_BOOK, ALL_AUTHORS, ALL_BOOKS } from '../utilities/queries'
 import { useMutation } from '@apollo/client/react'
+import { addBookToCache } from '../utilities/apolloClient'
+
+
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
@@ -11,6 +14,9 @@ const NewBook = (props) => {
 
   const [createBook] = useMutation(CREATE_BOOK,
     {
+      update: (cache, response) => {
+        addBookToCache(cache, response.data.addBook)
+      },
       refetchQueries: [
         { query: ALL_AUTHORS },
         { query: ALL_BOOKS },

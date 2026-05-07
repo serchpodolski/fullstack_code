@@ -54,6 +54,10 @@ const typeDefs = /* GraphQL */`
     ): Token
     _resetDatabase: Boolean
   }
+
+  type Subscription {
+    bookAdded: Book!
+  }
 `
 
 module.exports = typeDefs

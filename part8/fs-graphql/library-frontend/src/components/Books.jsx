@@ -1,40 +1,23 @@
 import { useState } from 'react'
-import { useQuery } from '@apollo/client/react'
-import { ALL_BOOKS } from '../utilities/queries'
-
 
 const Books = (props) => {
   const [filter, setFilter] = useState('all')
   
-  const booksQuery = useQuery(ALL_BOOKS, {
-    fetchPolicy: 'network-only',
-    variables:{
-      genre: filter === 'all' ? null : filter
-    },
-  })
-  
   if (!props.show) {
     return null
-  }
-
-  if (booksQuery.loading) {
-    return <div>Loading books...</div>
-  }
-
-  if (booksQuery.error) {
-    return <div>Error loading books</div>
   }
 
   const books = props.books ? props.books : []
   const uniqueGenres = [...new Set(books.flatMap(book => book.genres.map(genre => genre.toLowerCase())))]
   uniqueGenres.unshift('All')
 
-  // const booksToDisplay = filter !== 'all' ? books.filter(book => 
-  //                                 book.genres
-  //                                 .map(genre => genre.toLowerCase())
-  //                                 .includes(filter)) : books
-
-
+  const booksToDisplay = filter === 'all' 
+    ? books 
+    : books.filter(book => 
+        book.genres
+          .map(g => g.toLowerCase())
+          .includes(filter.toLowerCase())
+      )
 
   return (
     <div>
@@ -43,11 +26,11 @@ const Books = (props) => {
       <table>
         <tbody>
           <tr>
-            <th></th>
+            <th>title</th>
             <th>author</th>
             <th>published</th>
           </tr>
-          {booksQuery.data?.allBooks.map((a) => (
+          {booksToDisplay.map((a) => (
             <tr key={a.id}>
               <td>{a.title}</td>
               <td>{a.author?.name}</td>
@@ -63,8 +46,8 @@ const Books = (props) => {
           value={filter}
           onChange={({ target }) => setFilter(target.value)}
         >
-          {uniqueGenres.map((a) =>
-            <option key={a.id} value={a.toLowerCase()} name={a.toLowerCase()}>
+          {uniqueGenres.map((a, index) =>
+            <option key={index} value={a.toLowerCase()}>
               {a.charAt(0).toUpperCase()+a.slice(1)}
             </option>
           )}
