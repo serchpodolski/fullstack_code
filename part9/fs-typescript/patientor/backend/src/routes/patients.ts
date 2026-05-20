@@ -32,10 +32,21 @@ router.get('/', (_req, res: Response<nonSSNPatient[]>) => {
     name,
     dateOfBirth,
     gender,
-    occupation
+    occupation,
+    entries: []
   }));
   res.send(data);
 });
+
+router.get('/:id', (req: Request<{ id: string }>, res: Response<Patient>) => {
+  const patient = patientService.getPatient(req.params.id);
+  if (patient) {
+    res.json(patient);
+  } else {
+    res.status(404).end();
+  }
+});
+
 
 router.post('/', newPatientParser, (req: Request<unknown, unknown, Patient>, res: Response<Patient>) => {
   const newPatient = patientService.addPatient(req.body);

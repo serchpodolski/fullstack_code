@@ -1,11 +1,11 @@
-import { Gender, type newPatient } from './types.ts';
+import { Gender, type NewPatient } from './types.ts';
 
-const parseNewPatient = (object: unknown): newPatient => {
+const parseNewPatient = (object: unknown): NewPatient => {
   if(!object || typeof object !== 'object'){
     throw new Error('Incorrect or missing data');
   }
   if('name' in object && 'dateOfBirth' in object && 'ssn' in object && 'gender' in object && 'occupation' in object){
-    const newPatient: newPatient = {
+    const newPatient: NewPatient = {
       name: parseName(object.name),
       dateOfBirth: parseDate(object.dateOfBirth),
       ssn: parseSSN(object.ssn),
