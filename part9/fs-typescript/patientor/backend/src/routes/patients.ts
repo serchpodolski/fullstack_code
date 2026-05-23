@@ -27,19 +27,19 @@ const errorMiddleware = (error: unknown, _req: Request, res: Response, next: Nex
 
 
 router.get('/', (_req, res: Response<nonSSNPatient[]>) => {
-  const data = patients.map(({id, name, dateOfBirth, gender, occupation})=>({
+  const data = patients.map(({id, name, dateOfBirth, gender, occupation, entries})=>({
     id,
     name,
     dateOfBirth,
     gender,
     occupation,
-    entries: []
+    entries
   }));
   res.send(data);
 });
 
 router.get('/:id', (req: Request<{ id: string }>, res: Response<Patient>) => {
-  const patient = patientService.getPatient(req.params.id);
+  const patient = patientService.getPatientById(req.params.id);
   if (patient) {
     res.json(patient);
   } else {
@@ -51,6 +51,24 @@ router.get('/:id', (req: Request<{ id: string }>, res: Response<Patient>) => {
 router.post('/', newPatientParser, (req: Request<unknown, unknown, Patient>, res: Response<Patient>) => {
   const newPatient = patientService.addPatient(req.body);
   res.json(newPatient);
+});
+
+router.post('/:id/entries', (req: Request<{ id: string }>, res: Response) => {
+  const { id } = req.params;
+  try{
+    const newEntry = patientService.addEntry(id, req.body);
+    if (newEntry) {
+      res.status(201).json(newEntry);
+    } else {
+      res.status(404).json({ error: `Patient with id ${id} not found` });
+    }
+  } catch (error: unknown) {
+    if (error instanceof z.ZodError) {
+      res.status(400).json({ error: error.issues });
+    } else {
+      res.status(500).json({ error: 'An unexpected application exception occurred.' });
+    }
+  }
 });
 
 router.use(errorMiddleware);
