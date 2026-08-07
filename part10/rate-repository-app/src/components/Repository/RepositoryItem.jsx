@@ -1,6 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import Stats from './Stats';
-import theme from './theme';
+import theme from '../theme';
 import InfoCard from './InfoCard';
 
 const styles = StyleSheet.create({
