@@ -4,9 +4,9 @@ import { SIGNIN_USER } from '../gql/queries';
 import useAuthStorage from './useAuthStorage';
 
 const useSignin = () => {
-  const [mutate, result] = useMutation(SIGNIN_USER);
   const apolloClient = useApolloClient();
   const authStorage = useAuthStorage();
+  const [mutate, result] = useMutation(SIGNIN_USER);
   
   const signIn = async ({username, password}) => {
     const res = await mutate({variables: {credentials: {username, password}}})

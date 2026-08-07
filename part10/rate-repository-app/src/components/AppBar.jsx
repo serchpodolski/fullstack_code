@@ -1,6 +1,9 @@
-import { View, StyleSheet, Text , ScrollView } from 'react-native';
+import { View, StyleSheet, Text , ScrollView, Pressable } from 'react-native';
 import Constants from 'expo-constants';
-import { Link } from 'react-router-native';
+import { Link, useNavigate } from 'react-router-native';
+import { useQuery } from '@apollo/client/react';
+import { GET_ME} from '../gql/queries';
+import useSignout from '../hooks/useSignout';
 
 
 const styles = StyleSheet.create({
@@ -21,6 +24,18 @@ const styles = StyleSheet.create({
 })
 
 const AppBar = () => {
+  const navigate = useNavigate();
+  const { data } = useQuery(GET_ME, {fetchPolicy: 'cache-and-network', errorPolicy: 'all'});
+  const [signOut] = useSignout();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
+
+  const me = data?.me;
+  console.log(me);
+  
   return (
     <View style={{ backgroundColor: '#24292e' }} >
       <ScrollView horizontal>
@@ -28,9 +43,17 @@ const AppBar = () => {
           <Link to="/">
             <Text style={styles.barButton}>Repositories</Text>
           </Link>
-          <Link to="/signin">
-            <Text style={styles.barButton}>Sign in</Text>
-          </Link>
+          {
+            me ? (
+              <Pressable onPress={handleSignOut}>
+                <Text style={styles.barButton}>Sign out</Text>
+              </Pressable>
+            ) : (
+              <Link to="/signin">
+                <Text style={styles.barButton}>Sign in</Text>
+              </Link>
+            )
+          }
         </View>       
       </ScrollView>
     </View>
