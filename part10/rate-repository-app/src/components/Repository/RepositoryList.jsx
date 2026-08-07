@@ -1,4 +1,4 @@
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, Text } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../../hooks/useRepositories';
 
@@ -13,8 +13,8 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const RepositoryList = () => {
   const {repositories, loading, error} = useRepositories();
 
-  if(loading) return <p>Loading...</p>;
-  if(error) return <p>{error.message}</p>;
+  if(loading) return <Text>Loading...</Text>;
+  if(error) return <Text>{error.message}</Text>;
 
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)

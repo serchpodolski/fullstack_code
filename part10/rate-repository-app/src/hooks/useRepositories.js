@@ -8,7 +8,7 @@ const useRepositories = () => {
 
   // data?.repositories.edges.map(edge => console.log(edge.node))
   const repositories = data?.repositories;
-  console.log(repositories)
+  // console.log(repositories)
 
   return { repositories, loading, error, refetch };
 }
