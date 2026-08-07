@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import theme from "./theme";
 import * as yup from 'yup';
 import useSignin from "../hooks/useSignin";
+import { useNavigate } from "react-router-native";
 
 const initialValues = {
   username: '',
@@ -51,13 +52,17 @@ const styles = {
 
 const SignIn = () => {
   const [signIn] = useSignin();
+  const navigate = useNavigate();
 
   const onSubmit = async ({username, password}) => {
     try{
       const data = await signIn({username, password});
-      console.log(data);
+      if(data.data.authenticate.accessToken){
+        navigate('/');
+      } 
     } catch (err) {
       console.log(err);
+      console.log("Invalid credentials");
     }
   }
 
