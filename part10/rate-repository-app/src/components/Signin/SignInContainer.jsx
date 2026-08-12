@@ -1,10 +1,10 @@
-import Text from "./Text";
+import Text from "../Text";
 import { TextInput, View, Pressable } from "react-native";
 import { useFormik } from "formik";
-import theme from "./theme";
+import theme from "../theme";
 import * as yup from 'yup';
-import useSignin from "../hooks/useSignin";
-import { useNavigate } from "react-router-native";
+// import useSignin from "../../hooks/useSignin";
+// import { useNavigate } from "react-router-native";
 
 const initialValues = {
   username: '',
@@ -50,21 +50,21 @@ const styles = {
   }
 }
 
-const SignIn = () => {
-  const [signIn] = useSignin();
-  const navigate = useNavigate();
+const SignInContainer = ({onSubmit}) => {
+  // const [signIn] = useSignin();
+  // const navigate = useNavigate();
 
-  const onSubmit = async ({username, password}) => {
-    try{
-      const data = await signIn({username, password});
-      if(data.data.authenticate.accessToken){
-        navigate('/');
-      } 
-    } catch (err) {
-      console.log(err);
-      console.log("Invalid credentials");
-    }
-  }
+  // const onSubmit = async ({username, password}) => {
+  //   try{
+  //     const data = await signIn({username, password});
+  //     if(data.data.authenticate.accessToken){
+  //       navigate('/');
+  //     } 
+  //   } catch (err) {
+  //     console.log(err);
+  //     console.log("Invalid credentials");
+  //   }
+  // }
 
   const formik = useFormik({
     initialValues,
@@ -104,4 +104,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn;
+export default SignInContainer;
