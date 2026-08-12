@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 const RepositoryItem = ({ item }) => {
   return (
-    <View style={ styles.cardContainer }>
+    <View testID="repositoryItem" style={ styles.cardContainer }>
       <InfoCard {...item} />
       <View style={ styles.statsContainer } >
         <Stats title="Stars" total={item.stargazersCount} />
