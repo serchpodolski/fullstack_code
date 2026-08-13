@@ -54,9 +54,14 @@ const AppBar = () => {
                 </Link>
               </>
             ) : (
-              <Link to="/signin">
-                <Text style={styles.barButton}>Sign in</Text>
-              </Link>
+              <>
+                <Link to="/signin">
+                  <Text style={styles.barButton}>Sign in</Text>
+                </Link>
+                <Link to="/signup">
+                  <Text style={styles.barButton}>Sign up</Text>
+                </Link>
+              </>
             )
           }
         </View>       
