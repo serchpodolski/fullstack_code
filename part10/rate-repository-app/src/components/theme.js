@@ -4,7 +4,8 @@ const theme = {
         textSecondary: '#586069',
         primary: '#0366d6',
         backgroundPrimary: '#e1e4e8',
-        repositoryBackground: '#ffffff'
+        repositoryBackground: '#ffffff',
+        error: '#d73a49'
     },
     fontSizes: {
         body: 14,

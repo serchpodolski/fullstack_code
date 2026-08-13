@@ -6,6 +6,8 @@ import useRepository from "../../hooks/useRepository";
 import RepositoryItem from "./RepositoryItem";
 import formatDate from "../../utils/formatDate.js";
 
+const WIDTH_SIZE = 50;
+
 const styeles = StyleSheet.create({
   separator: {
     height: 10,
@@ -26,9 +28,9 @@ const styeles = StyleSheet.create({
     backgroundColor: theme.colors.repositoryBackground,
     borderColor: theme.colors.primary,
     borderWidth: 3,
-    width: 50,
-    height: 50,
-    borderRadius: width => width / 2,
+    width: WIDTH_SIZE,
+    height: WIDTH_SIZE,
+    borderRadius: WIDTH_SIZE / 2,
     textAlign: 'center',
     fontWeight: theme.fontWeights.bold,
     fontSize: theme.fontSizes.subheading,
