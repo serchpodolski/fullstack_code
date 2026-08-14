@@ -1,9 +1,14 @@
 import { useQuery } from '@apollo/client/react';
 import { GET_REPOSITORIES } from '../gql/queries';
 
-const useRepositories = () => {
+const useRepositories = (variables ={}) => {
   const { data, error, loading, refetch }= useQuery(GET_REPOSITORIES,
-    { fetchPolicy: 'cache-and-network' }
+    { 
+      variables: {
+        orderBy: variables.orderBy,
+        orderDirection: variables.orderDirection
+      },
+      fetchPolicy: 'cache-and-network' }
   );
 
   // data?.repositories.edges.map(edge => console.log(edge.node))
