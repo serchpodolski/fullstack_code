@@ -6,7 +6,8 @@ const useRepositories = (variables ={}) => {
     { 
       variables: {
         orderBy: variables.orderBy,
-        orderDirection: variables.orderDirection
+        orderDirection: variables.orderDirection,
+        searchKeyword: variables.searchKeyword
       },
       fetchPolicy: 'cache-and-network' }
   );

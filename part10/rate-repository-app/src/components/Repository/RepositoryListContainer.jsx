@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const RepositoryListContainer = ({ repositories, order, setOrder }) => {
+const RepositoryListContainer = ({ repositories, order, setOrder, searchQuery, setSearchQuery, loading }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
@@ -27,7 +27,11 @@ const RepositoryListContainer = ({ repositories, order, setOrder }) => {
       ListHeaderComponent={
         <RepositoryListHeader 
         order={order} 
-        setOrder={setOrder} />
+        setOrder={setOrder}
+        serachQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        loading={loading} 
+      />
       }
     />
   );
