@@ -1,31 +1,19 @@
-import { View, StyleSheet, Text , ScrollView, Pressable } from 'react-native';
-import Constants from 'expo-constants';
+import { View, ScrollView, Pressable } from 'react-native';
+import Text from './Text';
 import { Link, useNavigate } from 'react-router-native';
 import { useQuery } from '@apollo/client/react';
 import { GET_ME} from '../gql/queries';
 import useSignout from '../hooks/useSignout';
-
-
-const styles = StyleSheet.create({
-  container:{
-    paddingTop: Constants.statusBarHeight,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    backgroundColor: '#24292e',
-    width: '100%'
-  },
-  barButton: {
-    padding: 20,
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold'
-  }
-})
+import {styles} from '../utils/styles';
 
 const AppBar = () => {
   const navigate = useNavigate();
-  const { data } = useQuery(GET_ME, {fetchPolicy: 'cache-and-network', errorPolicy: 'all'});
+  const { data } = useQuery(GET_ME, 
+                {
+                  variables: {"includeReviews": false},
+                  fetchPolicy: 'cache-and-network', 
+                  errorPolicy: 'all'
+                });
   const [signOut] = useSignout();
 
   const handleSignOut = async () => {
@@ -39,19 +27,22 @@ const AppBar = () => {
   return (
     <View style={{ backgroundColor: '#24292e' }} >
       <ScrollView horizontal>
-        <View style={styles.container}>
+        <View style={styles.appBarContainer}>
           <Link to="/">
-            <Text style={styles.barButton}>Repositories</Text>
+            <Text style={styles.appBarButton}>Repositories</Text>
           </Link>
           {
             me ? (
               <>
-                <Pressable onPress={handleSignOut}>
-                  <Text style={styles.barButton}>Sign out</Text>
-                </Pressable>
                 <Link to="/create-review">
-                  <Text style={styles.barButton}>Create review</Text>
+                  <Text style={styles.appBarButton}>Create review</Text>
                 </Link>
+                <Link to="/my-reviews">
+                  <Text style={styles.appBarButton}>My reviews</Text>
+                </Link>
+                <Pressable onPress={handleSignOut}>
+                  <Text style={styles.appBarButton}>Sign out</Text>
+                </Pressable>
               </>
             ) : (
               <>

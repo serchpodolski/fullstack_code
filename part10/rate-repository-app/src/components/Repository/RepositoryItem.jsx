@@ -5,40 +5,7 @@ import theme from '../theme';
 import InfoCard from './InfoCard';
 import { useNavigate } from 'react-router-native';
 // import { openURL } from 'expo-linking';
-
-const styles = StyleSheet.create({
-  statsContainer: {
-    padding: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    backgroundColor: theme.colors.repositoryBackground
-  },
-  cardContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    // alignItems: 'flex-start',
-    marginBottom: 10,
-    backgroundColor: theme.colors.repositoryBackground
-  },
-  button: {
-    backgroundColor: theme.colors.primary,
-    width: '95%',
-    margin: 'auto',
-    marginTop: 5,
-    marginBottom: 15,
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: theme.fontSizes.subheading,
-    fontWeight: theme.fontWeights.bold
-  }
-});
+import {styles} from '../../utils/styles';
 
 const RepositoryItem = ({ item, showGithubButton }) => {
   const navigate = useNavigate();

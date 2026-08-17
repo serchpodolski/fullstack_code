@@ -29,11 +29,24 @@ export const SIGNIN_USER = gql`
 `;
 
 export const GET_ME = gql`
-  query {
-    me {
+  query getMe($includeReviews: Boolean = false) {
+    me{
       id
       username
-    }
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            createdAt
+            text
+            rating
+            repositoryId
+            user{
+              username
+            }
+          }
+        }
+      }
+  }
   }
 `;
 
