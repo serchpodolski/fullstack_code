@@ -97,5 +97,23 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold'
+  },
+  reviewButtonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    gap: 10,
+    alignItems: 'center',
+    backgroundColor: theme.colors.repositoryBackground,
+    paddingBottom: 10
+  },
+  reviewContainerButton: {
+    backgroundColor: theme.colors.primary,
+    paddingHorizontal: 25,
+    paddingVertical: 10,
+    color: theme.colors.repositoryBackground,
+    textAlign: 'center',
+    fontWeight: theme.fontWeights.bold,
+    borderRadius: 5
   }
 });

@@ -36,6 +36,7 @@ export const GET_ME = gql`
       reviews @include(if: $includeReviews) {
         edges {
           node {
+            id
             createdAt
             text
             rating
@@ -100,5 +101,11 @@ export const CREATE_USER = gql`
       id
       username
     }
+  }
+`;
+
+export const DELETE_REVIEW = gql`
+  mutation DeleteReview($id: ID!) {
+    deleteReview(id: $id)
   }
 `;
