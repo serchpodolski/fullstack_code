@@ -1,8 +1,20 @@
 import { gql } from '@apollo/client';
 
 export const GET_REPOSITORIES = gql`
-  query GetRepositories($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, , $searchKeyword: String) {
-    repositories(orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword) {
+  query GetRepositories(
+      $orderBy: AllRepositoriesOrderBy, 
+      $orderDirection: OrderDirection, 
+      $searchKeyword: String, 
+      $first: Int, 
+      $after: String) 
+  {
+    repositories(
+      orderBy: $orderBy, 
+      first: $first, 
+      after: $after, 
+      orderDirection: $orderDirection, 
+      searchKeyword: $searchKeyword) 
+    {
       edges {
         node {
           id
@@ -15,7 +27,14 @@ export const GET_REPOSITORIES = gql`
           forksCount
           language
         }
+        cursor
       }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
+      }
+      totalCount
     }
   }
 `;
@@ -52,7 +71,7 @@ export const GET_ME = gql`
 `;
 
 export const GET_REPO_DETAILS = gql`
-  query ($id: ID!) {
+  query ($id: ID!, $first: Int, $after: String) {
     repository(id: $id) {
       id
       fullName
@@ -65,18 +84,25 @@ export const GET_REPO_DETAILS = gql`
       language
       ratingAverage
       ownerAvatarUrl
-      reviews {
+      reviews(first: $first, after: $after) {
         edges {
           node {
             id
             text
             rating
             createdAt
+            repositoryId
             user {
               id
               username
             }
           }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
         }
       }
     }

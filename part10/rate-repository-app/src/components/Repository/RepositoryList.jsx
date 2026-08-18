@@ -10,9 +10,10 @@ const RepositoryList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
   
-  const {repositories, loading, error} = useRepositories(
+  const {repositories, loading, error, fetchMore, loadingMore } = useRepositories(
     {
       ...order,
+      first:5,
       searchKeyword: debouncedSearchQuery
     }
   );
@@ -27,6 +28,8 @@ const RepositoryList = () => {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             loading={loading}
+            onEndReached={fetchMore}
+            loadingMore={loadingMore}
           />
 }
 

@@ -115,5 +115,10 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: theme.fontWeights.bold,
     borderRadius: 5
-  }
+  },
+  footerLoader: {
+    paddingVertical: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
