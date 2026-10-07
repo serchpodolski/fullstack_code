@@ -24,3 +24,11 @@ jobs:
       - name: Lint style
         working-directory: ./part11
         run: npm run eslint
+
+      - name: Run tests
+        working-directory: ./part11
+        run: npm test
+
+      - name: Create Build
+        working-directory: ./part11
+        run: npm run build
