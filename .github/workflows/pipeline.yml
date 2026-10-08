@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   simple_deployment_pipeline:
@@ -32,3 +35,11 @@ jobs:
       - name: Create Build
         working-directory: ./part11
         run: npm run build
+
+      - name: Install playwright browsers
+        working-directory: ./part11
+        run: npx playwright install --with-deps
+
+      - name: Run playwright tests
+        working-directory: ./part11
+        run: npm run test:e2e
