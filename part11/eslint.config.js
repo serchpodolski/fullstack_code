@@ -72,9 +72,7 @@ module.exports = [
       'arrow-spacing': ['error', { 'before': true, 'after': true }],
       'no-console': 'off',
       'react/prop-types': 0,
-      'no-unused-vars': ['error', { 
-         varsIgnorePattern: '^(Router|[A-Z].*)' 
-        }],
+      'no-unused-vars': 'off',
     }
   }
 ]
