@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode development --port 8080",
     "start-prod": "node app.js",
-    "test": "playwright test",
+    "test": "jest",
     "test:e2e": "playwright test --project=chromium",
     "test:report": "playwright show-report",
     "eslint": "eslint \"./**/*.{js,jsx}\"",
