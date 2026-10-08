@@ -10,7 +10,8 @@ module.exports = [
       'eslint.config.js',
       '.eslintrc.js',
       'node_modules/**',
-      'dist/**'
+      'dist/**',
+      'playwright.config.js',
     ]
   },
   js.configs.recommended,
@@ -36,7 +37,7 @@ module.exports = [
     }
   },
   {
-    files: ['src/**/*.{js,jsx}', 'test/**/*.{js,jsx}'],
+    files: ['src/**/*.{js,jsx}', 'test/**/*.{js,jsx}', 'tests/**/*.{js,jsx}'],
     plugins: {
       react,
       jest
