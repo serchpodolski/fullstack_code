@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+    types: [opened, synchronize]
 
 jobs:
   simple_deployment_pipeline:
@@ -20,10 +21,9 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Install project dependencies
-        working-directory: ./part11
-        run: npm install
-
+      # - name: Install project dependencies
+      #   working-directory: ./part11
+      #   run: npm install
       - name: Lint style
         working-directory: ./part11
         run: npm run eslint
@@ -31,10 +31,17 @@ jobs:
       - name: Run tests
         working-directory: ./part11
         run: npm test
-
-      - name: Create Build
+        
+      - name: Make script executable
         working-directory: ./part11
-        run: npm run build
+        run: chmod +x build_step.sh
+
+      # - name: Create Build
+      #   working-directory: ./part11
+      #   run: npm run build
+      - name: Execute build script
+        working-directory: ./part11
+        run: ./build_step.sh
 
       - name: Install playwright browsers
         working-directory: ./part11
