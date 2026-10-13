@@ -12,6 +12,10 @@ on:
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./part11
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -22,32 +26,41 @@ jobs:
           node-version: '24'
 
       - name: Install project dependencies
-        working-directory: ./part11
+        # working-directory: ./part11
         run: npm install
         
       - name: Lint style
-        working-directory: ./part11
+        # working-directory: ./part11
         run: npm run eslint
 
       - name: Run tests
-        working-directory: ./part11
+        # working-directory: ./part11
         run: npm test
         
       - name: Make script executable
-        working-directory: ./part11
+        # working-directory: ./part11
         run: chmod +x build_step.sh
 
       # - name: Create Build
       #   working-directory: ./part11
       #   run: npm run build
       - name: Execute build script
-        working-directory: ./part11
+        # working-directory: ./part11
         run: ./build_step.sh
 
       - name: Install playwright browsers
-        working-directory: ./part11
+        # working-directory: ./part11
         run: npx playwright install --with-deps
 
       - name: Run playwright tests
-        working-directory: ./part11
+        # working-directory: ./part11
         run: npm run test:e2e
+
+  deploy:
+    needs: [simple_deployment_pipeline]
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Deploy Hook
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+    
