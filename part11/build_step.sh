@@ -9,3 +9,4 @@ npm run build
 
 echo "Build process completed"
 echo "Testing auto deployment..."
+echo "Now testing health check path"
