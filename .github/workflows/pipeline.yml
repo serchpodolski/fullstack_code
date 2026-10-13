@@ -21,9 +21,10 @@ jobs:
         with:
           node-version: '24'
 
-      # - name: Install project dependencies
-      #   working-directory: ./part11
-      #   run: npm install
+      - name: Install project dependencies
+        working-directory: ./part11
+        run: npm install
+        
       - name: Lint style
         working-directory: ./part11
         run: npm run eslint
