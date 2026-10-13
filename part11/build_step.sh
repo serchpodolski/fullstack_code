@@ -8,3 +8,4 @@ npm install
 npm run build
 
 echo "Build process completed"
+echo "Testing auto deployment..."
