@@ -63,4 +63,24 @@ jobs:
     steps:
       - name: Trigger Render Deploy Hook
         run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
-    
+  
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    # if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+
+      - name: Bump version and push tag
+        id: tag_runner
+        uses: anothrNick/github-tag-action@1.75.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          WITH_V: true
+          DRY_RUN: true
+
+      - name: Log calculated tag
+        run: echo "The next tag will be ${{ steps.tag_runner.outputs.new_tag }}"
