@@ -17,3 +17,8 @@ test('get started link', async ({ page }) => {
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible()
 })
+
+// Test for notification failure
+test('intentional failure test', () => {
+  expect(true).toBe(false)
+})
