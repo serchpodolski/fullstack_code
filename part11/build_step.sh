@@ -9,4 +9,4 @@ npm run build
 
 echo "Build process completed"
 echo "Testing auto deployment..."
-echo "New branch for pull request check"
+echo "Now testing commiting without deployment"
