@@ -80,6 +80,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           WITH_V: true
+          
+      - name: Log calculated tag
+        run: echo "The next tag will be ${{ steps.tag_runner.outputs.new_tag }}"
 
   notify: 
     needs: [simple_deployment_pipeline, deploy, tag_release]
@@ -100,7 +103,7 @@ jobs:
             **Author:** ${{ github.actor }}
 
       - name: Discord failure notification
-        if: ${{ needs.simple_deployment_pipeline.result == 'failure' && (needs.deploy.result == 'failure' || needs.tag_release.result == 'failure') }}
+        if: ${{ needs.simple_deployment_pipeline.result == 'failure' || needs.deploy.result == 'failure' || needs.tag_release.result == 'failure' }}
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
@@ -113,7 +116,3 @@ jobs:
             **Author:** ${{ github.actor }}
             **Workflow:** `${{ github.workflow }}`
             **Job:** `${{ github.job }}`
-        
-
-      - name: Log calculated tag
-        run: echo "The next tag will be ${{ steps.tag_runner.outputs.new_tag }}"
