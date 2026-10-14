@@ -81,5 +81,39 @@ jobs:
           DEFAULT_BUMP: patch
           WITH_V: true
 
+  notify: 
+    needs: [simple_deployment_pipeline, deploy, tag_release]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Discord Success Notification
+        if: ${{ needs.simple_deployment_pipeline.result == 'success' && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped') }}
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: 'success'
+          description: |
+            **Commit:** `${{ github.sha }}`
+            **Message:** ${{ github.event.head_commit.message }}
+            **Author:** ${{ github.actor }}
+
+      - name: Discord failure notification
+        if: ${{ needs.simple_deployment_pipeline.result == 'failure' && (needs.deploy.result == 'failure' || needs.tag_release.result == 'failure') }}
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: 'failure'
+          description: |
+            **Repository:** `${{ github.repository }}`
+            **Branch:** `${{ github.ref_name }}`
+            **Commit:** `${{ github.sha }}`
+            **Message:** ${{ github.event.head_commit.message }}
+            **Author:** ${{ github.actor }}
+            **Workflow:** `${{ github.workflow }}`
+            **Job:** `${{ github.job }}`
+        
+
       - name: Log calculated tag
         run: echo "The next tag will be ${{ steps.tag_runner.outputs.new_tag }}"
