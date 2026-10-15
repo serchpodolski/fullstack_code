@@ -2,7 +2,8 @@ name: Deployed App Health Check
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+
+    - cron: '0 0 * * *'
   workflow_dispatch:
     inputs:
       url:
@@ -21,3 +22,5 @@ jobs:
           url: ${{ github.event.inputs.url  || 'https://pokedex-l6ij.onrender.com'}}
           max-attempts: 5
           retry-delay: 15s
+          follow-redirect: true
+
