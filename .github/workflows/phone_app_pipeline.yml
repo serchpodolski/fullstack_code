@@ -48,3 +48,36 @@ jobs:
     steps:
       - name: Trigger Render Deploy Hook
         run: curl ${{ secrets.RENDER_DEPLOY_HOOK_PHONE }}
+
+  notify:
+    needs: [phone_app_pipeline, deploy]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Discord Success Notification
+        if: ${{ needs.phone_app_pipeline.result == 'success' && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped') }}
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: 'success'
+          description: |
+            **Commit:** `${{ github.sha }}`
+            **Message:** ${{ github.event.head_commit.message }}
+            **Author:** ${{ github.actor }}
+
+      - name: Discord failure notification
+        if: ${{ needs.phone_app_pipeline.result == 'failure' || needs.deploy.result == 'failure'}}
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: 'failure'
+          description: |
+            **Repository:** `${{ github.repository }}`
+            **Branch:** `${{ github.ref_name }}`
+            **Commit:** `${{ github.sha }}`
+            **Message:** ${{ github.event.head_commit.message }}
+            **Author:** ${{ github.actor }}
+            **Workflow:** `${{ github.workflow }}`
+            **Job:** `${{ github.job }}`
