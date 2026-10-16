@@ -1,0 +1,9 @@
+{
+  "name": "part11b",
+  "private": true,
+  "scripts": {
+
+    "build:ui": "bash build_step.sh",
+    "start": "npm start --prefix backend"
+  }
+}

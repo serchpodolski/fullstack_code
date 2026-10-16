@@ -1,0 +1,55 @@
+name: Phone App Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize]
+
+jobs:
+  phone_app_pipeline: 
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./part11b
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+
+      - name: Install & Lint Backend
+        run: |
+          npm ci --prefix backend
+          npm run lint --prefix backend
+
+      - name: Install & Lint Frontend
+        run: |
+          npm ci --prefix frontend
+          npm run lint --prefix frontend
+
+      - name: Build Full App via Script
+        run: |
+          chmod +x build_step.sh
+          ./build_step.sh
+  
+  deploy:
+    needs: [phone_app_pipeline]
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./part11b
+    steps:
+      - name: Trigger Render Deploy Hook
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
