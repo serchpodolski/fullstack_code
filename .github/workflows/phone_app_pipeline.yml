@@ -45,9 +45,6 @@ jobs:
     needs: [phone_app_pipeline]
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./part11b
     steps:
       - name: Trigger Render Deploy Hook
         run: curl ${{ secrets.RENDER_DEPLOY_HOOK_PHONE }}
